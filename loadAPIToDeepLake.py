@@ -29,7 +29,7 @@ try:
     #will only raise a response if unsuccessful
     response.raise_for_status()
     data = response.text 
-    upload_to_DeepLake("herokutest3", connection_string, data) #filesystem name cannot have capital letters or /
+    upload_to_DeepLake("herokutest7", connection_string, data) #filesystem name cannot have capital letters or /
     
     
 except HTTPError as http_err:
