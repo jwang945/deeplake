@@ -5,7 +5,7 @@ url = "https://cat-fact.herokuapp.com/facts" #edit URL to pick which api to retr
 
 try:
     response = requests.get(url)
-
+    print(response.text)
     # If the response was successful, no Exception will be raised
     response.raise_for_status()
 except HTTPError as http_err:
