@@ -26,20 +26,19 @@ try:
     #will only raise a response if unsuccessful
     response.raise_for_status()
     data = response.text
-    print(data[0:2])
-    filesystem_name = "herokutest3" #filesystem name cannot have capital letters or /
-    # #datalake client creation
-    # service = DataLakeServiceClient.from_connection_string(conn_str=connection_string)
-    # #filesystem_name cannot have capitol letters or /
-    # print("Generating file system named: ", filesystem_name)
-    # #create the filesystem client
-    # filesystem_client = service.create_file_system(file_system=filesystem_name)
+    filesystem_name = "herokutest5" #filesystem name cannot have capital letters or /
+    #datalake client creation
+    service = DataLakeServiceClient.from_connection_string(conn_str=connection_string)
+    #filesystem_name cannot have capitol letters or /
+    print("Generating file system named: ", filesystem_name)
+    #create the filesystem client
+    filesystem_client = service.create_file_system(file_system=filesystem_name)
 
-    # upload_to_DeepLake(filesystem_client, connection_string, data, datatype="JSON") 
+    upload_to_DeepLake(filesystem_client, connection_string, data, datatype="JSON") 
     
-    # df = pd.read_json(data)
-    # data = df.to_csv(index=False)
-    # upload_to_DeepLake(filesystem_client, connection_string, data, datatype="CSV")
+    df = pd.read_json(data)
+    data = df.to_csv(index=False)
+    upload_to_DeepLake(filesystem_client, connection_string, data, datatype="CSV")
     
     
 except HTTPError as http_err:
