@@ -2,19 +2,16 @@ import requests
 from requests.exceptions import HTTPError
 from azure.storage.filedatalake import DataLakeServiceClient
 from azure.storage.filedatalake import DataLakeFileClient
-import datetime
+import pandas as pd
 
-def upload_to_DeepLake(filesystem_name, connection_string, data):
-    #datalake client creation
-    service = DataLakeServiceClient.from_connection_string(conn_str=connection_string)
-    #filesystem_name cannot have capitol letters or /
-    print("Generating file system named: ", filesystem_name)
+def upload_to_DeepLake(filesystem_client, connection_string, data, datatype='JSON'):
 
-    #create the filesystem client
-    filesystem_client = service.create_file_system(file_system=filesystem_name)
 
     #add a file to the filesystem
-    file_name = filesystem_name+"001"
+    if datatype =="JSON":
+        file_name = filesystem_name+"JSON"
+    elif datatype == "CSV":
+        file_name=filesystem_name+"CSV"
     file_client = filesystem_client.get_file_client(file_name)
     file_client.create_file()
     file_client.append_data(data=data, offset=0, length=len(data))
@@ -28,8 +25,21 @@ try:
     response = requests.get(url)
     #will only raise a response if unsuccessful
     response.raise_for_status()
-    data = response.text 
-    upload_to_DeepLake("herokutest7", connection_string, data) #filesystem name cannot have capital letters or /
+    data = response.text
+    print(data[0:2])
+    filesystem_name = "herokutest3" #filesystem name cannot have capital letters or /
+    # #datalake client creation
+    # service = DataLakeServiceClient.from_connection_string(conn_str=connection_string)
+    # #filesystem_name cannot have capitol letters or /
+    # print("Generating file system named: ", filesystem_name)
+    # #create the filesystem client
+    # filesystem_client = service.create_file_system(file_system=filesystem_name)
+
+    # upload_to_DeepLake(filesystem_client, connection_string, data, datatype="JSON") 
+    
+    # df = pd.read_json(data)
+    # data = df.to_csv(index=False)
+    # upload_to_DeepLake(filesystem_client, connection_string, data, datatype="CSV")
     
     
 except HTTPError as http_err:
