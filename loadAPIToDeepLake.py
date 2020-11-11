@@ -26,7 +26,7 @@ try:
     #will only raise a response if unsuccessful
     response.raise_for_status()
     data = response.text
-    filesystem_name = "herokutest5" #filesystem name cannot have capital letters or /
+    filesystem_name = "herokutest" #filesystem name cannot have capital letters or /
     #datalake client creation
     service = DataLakeServiceClient.from_connection_string(conn_str=connection_string)
     #filesystem_name cannot have capitol letters or /
